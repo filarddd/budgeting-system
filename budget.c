@@ -25,10 +25,10 @@ void addTrans() {
     scanf("%29s", *(categories + transCount));
 
     printf("Enter amount: ");
-    scanf("%f", *(amounts + transCount));
+    scanf("%f", amounts + transCount);
 
     printf("Is this Income? (1 for YES, 0 for NO): ");
-    scanf("%d", *(incomes + transCount));
+    scanf("%d", incomes + transCount);
 
     transCount++;
     printf("Transaction added successfully.\n");
@@ -114,11 +114,11 @@ void load() {
     }
 
     transCount = 0;
-    while (fscanf(file, "%10s %29s %f %d\n",
+    while (fscanf(file, "%91[^,],%29[^,],%f,%d1",
                   *(dates + transCount),
                   *(categories + transCount),
-                  (amounts + transCount),
-                  (incomes + transCount)) == 4) {
+                  amounts + transCount,
+                  incomes + transCount) == 4) {
         transCount++;
         if (transCount >= MAX_TRANSACTIONS) {
             printf("Transaction limit reached while loading.\n");
@@ -131,7 +131,7 @@ void load() {
 
 void menu() {
     int choice = -1;
-    
+
     while (choice != 0) {
         printf("\nBudget Management System\n");
         printf("1. Add Transaction\n");
