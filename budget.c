@@ -114,19 +114,21 @@ void load() {
     }
 
     transCount = 0;
-    while (fscanf(file, "%91[^,],%29[^,],%f,%d1",
-                  *(dates + transCount),
-                  *(categories + transCount),
-                  amounts + transCount,
-                  incomes + transCount) == 4) {
+
+    while (transCount < MAX_TRANSACTIONS && fscanf(file, "%10[^,],%29[^,],%f,%d\n",
+                  dates[transCount],
+                  categories[transCount],
+                  &amounts[transCount],
+                  &incomes[transCount]) == 4) {
         transCount++;
-        if (transCount >= MAX_TRANSACTIONS) {
+
+        if (transCount == MAX_TRANSACTIONS) {
             printf("Transaction limit reached while loading.\n");
             break;
         }
     }
     fclose(file);
-    printf("Transactions loaded successfully.\n");
+    printf("Loaded %d transactions successfully.\n", transCount);
 }
 
 void menu() {
